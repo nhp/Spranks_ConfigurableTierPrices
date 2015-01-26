@@ -30,7 +30,6 @@ class Spranks_ConfigurableTierPrices_Model_Observer
                 $product->setData('final_price', $tierPrice);
             }
         }
-
         return $this;
     }
 
@@ -59,14 +58,19 @@ class Spranks_ConfigurableTierPrices_Model_Observer
                 $id = $item->getProductId();
                 // map the parent ID with the quantity of the simple product
                 $idQuantities[$id][] = $item->getQty();
+                $_p = $item->getOptionByCode('simple_product')->getProduct();
+                if ($product->getSku() == $_p->getSku()) {
+                    $simples[$product->getSku()] = $_p;
+                }
             }
             // compute the total quantity of items of the configurable product
             if (array_key_exists($product->getId(), $idQuantities)) {
                 $totalQty  = array_sum($idQuantities[$product->getId()]);
-                $tierPrice = $product->getPriceModel()->getBasePrice($product, $totalQty);
+                $_s = $simples[$product->getSku()];
+                $tierPrice = $_s->getPriceModel()->getBasePrice($_s, $totalQty)-($_s->getPrice()-$product->getPrice());
+
             }
         }
-
         return $tierPrice;
     }
 
