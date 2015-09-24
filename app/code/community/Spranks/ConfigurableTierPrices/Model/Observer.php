@@ -51,7 +51,7 @@ class Spranks_ConfigurableTierPrices_Model_Observer
             // go through all products in the quote
             foreach ($items as $item) {
                 /** @var Mage_Sales_Model_Quote_Item $item */
-                if ($item->getParentItem() || $item->getProductType() != 'simple_product') {
+                if ($item->getParentItem() || $item->getProductType() == 'buyerprotect') {
                     continue;
                 }
                 // this is the product ID of the parent!
