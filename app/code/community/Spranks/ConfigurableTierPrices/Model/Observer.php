@@ -70,7 +70,7 @@ class Spranks_ConfigurableTierPrices_Model_Observer
             if (array_key_exists($product->getId(), $idQuantities)) {
                 $totalQty  = array_sum($idQuantities[$product->getId()]);
                 $_s = $simples[$product->getSku()];
-                $tierPrice = $_s->getPriceModel()->getBasePrice($_s, $totalQty)-($_s->getPrice()-$product->getPrice());
+                $tierPrice = $_s->getPriceModel()->getBasePrice($_s, $totalQty)-($_s->getSpecialPrice()-$product->getSpecialPrice());
 
             }
         }
